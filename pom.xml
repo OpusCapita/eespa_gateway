@@ -26,6 +26,7 @@
   </parent>
   <artifactId>phase4-spring-boot-demo</artifactId>
   <name>phase4-spring-boot-demo</name>
+  <version>0.0.1-SNAPSHOT</version>
   <description>phase4 Spring Boot demo application</description>
   <url>https://github.com/phax/phase4/phase4-spring-boot-demo</url>
   <inceptionYear>2021</inceptionYear>
@@ -43,7 +44,7 @@
       <dependency>
         <groupId>com.helger.phase4</groupId>
         <artifactId>phase4-parent-pom</artifactId>
-        <version>1.3.7-SNAPSHOT</version>
+        <version>1.3.7</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
