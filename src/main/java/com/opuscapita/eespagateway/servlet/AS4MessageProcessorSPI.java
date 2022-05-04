@@ -1,4 +1,4 @@
-package com.helger.phase4.springboot.servlet;
+package com.opuscapita.eespagateway.servlet;
 
 import java.io.InputStream;
 

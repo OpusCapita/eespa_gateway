@@ -1,4 +1,4 @@
-package com.helger.phase4.springboot;
+package com.opuscapita.eespagateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

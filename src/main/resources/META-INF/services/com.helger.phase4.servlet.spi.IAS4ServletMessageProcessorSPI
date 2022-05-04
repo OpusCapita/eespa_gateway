@@ -1,1 +1,1 @@
-com.helger.phase4.springboot.servlet.AS4MessageProcessorSPI
+com.opuscapita.eespagateway.servlet.AS4MessageProcessorSPI

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phase4.springboot.servlet;
+package com.opuscapita.eespagateway.servlet;
 
 import java.io.File;
 import java.security.KeyStore;
@@ -70,7 +70,7 @@ public class ServletConfig
       WebScopeManager.onGlobalBegin (aSC);
       _initGlobalSettings (aSC);
       _initAS4 ();
-      _initPeppolAS4 ();
+      _initCrypto ();
     }
   }
 
@@ -116,7 +116,7 @@ public class ServletConfig
     AS4ServerInitializer.initAS4Server ();
   }
 
-  private static void _initPeppolAS4 ()
+  private static void _initCrypto ()
   {
     // Check if crypto properties are okay
     final KeyStore aKS = AS4CryptoFactoryProperties.getDefaultInstance ().getKeyStore ();
