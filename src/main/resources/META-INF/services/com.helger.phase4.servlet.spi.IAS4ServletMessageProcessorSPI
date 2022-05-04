@@ -1,1 +1,1 @@
-com.opuscapita.eespagateway.servlet.AS4MessageProcessorSPI
+com.opuscapita.eespagateway.inbound.AS4MessageProcessorSPI

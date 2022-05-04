@@ -10,9 +10,16 @@
   <artifactId>eespa-opuscapita</artifactId>
   <name>eespa-opuscapita</name>
   <version>0.0.1-SNAPSHOT</version>
-  <description>phase4 Spring Boot demo application</description>
-  <url>https://github.com/phax/phase4/phase4-spring-boot-demo</url>
-  <inceptionYear>2021</inceptionYear>
+  <description>EESPA OpusCapita AS4 handler</description>
+  <inceptionYear>2022</inceptionYear>
+
+  <properties>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <java.version>1.8</java.version>
+    
+    <spring-boot.version>2.6.7</spring-boot.version>
+  </properties>
 
   <!-- Include here to not bloat the global scope -->
   <dependencyManagement>
@@ -20,7 +27,7 @@
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
-        <version>2.6.7</version>
+        <version>${spring-boot.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -77,18 +84,12 @@
     </dependency>
   </dependencies>
 
-	<properties>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<java.version>1.8</java.version>
-	</properties>
-
   <build>
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>2.6.7</version>
+        <version>${spring-boot.version}</version>
       </plugin>
     </plugins>
   </build>

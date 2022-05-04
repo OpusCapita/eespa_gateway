@@ -1,4 +1,4 @@
-package com.opuscapita.eespagateway.servlet;
+package com.opuscapita.eespagateway.inbound;
 
 import java.io.InputStream;
 
