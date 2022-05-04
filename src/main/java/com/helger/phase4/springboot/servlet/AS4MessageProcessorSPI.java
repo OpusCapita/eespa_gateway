@@ -51,11 +51,13 @@ public class AS4MessageProcessorSPI implements IAS4ServletMessageProcessorSPI
                                                           @Nonnull final ICommonsList <Ebms3Error> aProcessingErrors)
   {
     // Debug logging block only to see what's coming in
+	// TODO, deal with the payload here!
+	  
     if (LOGGER.isInfoEnabled ())
     {
       LOGGER.info ("Received AS4 message:");
       LOGGER.info ("  UserMessage: " + aUserMessage);
-      LOGGER.info ("  Payload: " + (aPayload == null ? "null" : true ? "present" : XMLWriter.getNodeAsString (aPayload)));
+      LOGGER.info ("  Payload: " + (aPayload == null ? "null" : true ? "present" : XMLWriter.getNodeAsString (aPayload))    );
 
       if (aIncomingAttachments != null)
       {
