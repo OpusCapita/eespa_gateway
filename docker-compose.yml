@@ -4,7 +4,6 @@ services:
     build: .
     image: opuscapita/eespa-gateway:dev
     depends_on:
-     - mysql
      - consul
      - registrator
      - redis
@@ -74,8 +73,6 @@ services:
       - '7946:7946'
       - '7946:7946/udp'
     depends_on:
-      - postgres
-      - mysql
       - redis
 
   api-registry:
