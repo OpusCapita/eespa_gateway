@@ -1,0 +1,55 @@
+{
+  "default": {
+    "replicas": 1,
+    "name": "${serviceName}",
+    "log-driver":"json-file",
+    "log-opt": [
+        "max-size=200m",
+        "max-file=2",
+        "compress=false"
+      ],
+    "constraint": ["engine.labels.nodetype==worker"],
+    "publish": [
+      "mode=host,target=3076,published=3076,protocol=tcp",
+      "mode=host,target=3077,published=3077,protocol=tcp"
+    ],
+    "host": ["consul:172.17.0.1"],
+    "env": [
+      "SERVICE_NAME=${serviceName}",
+      "SERVICE_3071_NAME=${serviceName}",
+      "SERVICE_3071_CHECK_HTTP=/api/health/check",
+      "SERVICE_3071_CHECK_INTERVAL=15s",
+      "SERVICE_3071_CHECK_TIMEOUT=3s",
+      "SERVICE_3074_NAME=${serviceName}-exporter",
+      "SERVICE_3074_CHECK_TCP=true",
+      "SERVICE_3074_CHECK_INTERVAL=15s",
+      "SERVICE_3074_CHECK_TIMEOUT=3s",
+      "PEPPOL_KEYSTORE_PASS=${PEPPOL_:env_KEYSTOREPASS}"
+    ],
+    "oc-consul-injection": {
+      "redis/password": "${SECRET_:env_REDIS}",
+      "spring/rabbitmq/host": "rabbitmq",
+      "spring/rabbitmq/port": "5672",
+      "spring/rabbitmq/username": "${SECRET_:env_RABBITMQUSER}",
+      "spring/rabbitmq/password": "${SECRET_:env_RABBITMQPASS}",
+      "snc/enabled": "true",
+      "snc/rest/url": "${PEPPOL_:env_SNCURL}",
+      "snc/rest/scope": "${PEPPOL_:env_SNCSCOPE}",
+      "snc/rest/username": "${PEPPOL_:env_SNCUSER}",
+      "snc/rest/password": "${PEPPOL_:env_SNCPASS}",
+      "snc/bsc": "peppol-AP",
+      "snc/from": "peppol-AP@",
+      "snc/businessGroup": "Opus Capita Bussiness Network"
+    },
+    "oc-secret-injection": {
+
+    },
+    "limit-memory": "900M",
+    "reserve-memory": "900M",
+    "oc-service-user-create-override": "true"
+  },
+  "prod": {
+    "replicas": 1,
+    "limit-memory": "6144M"
+  }
+}

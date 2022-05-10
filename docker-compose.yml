@@ -1,0 +1,120 @@
+version: '3'
+services:
+  main:
+    build: .
+    image: opuscapita/eespa-gateway:dev
+    depends_on:
+     - mysql
+     - consul
+     - registrator
+     - redis
+     - kong
+     - rabbitmq
+     - api-registry
+    labels:
+      SERVICE_NAME: 'eespa-gateway'
+      SERVICE_TAGS: 'kong'
+    environment:
+      PORT: 3071
+      SERVICE_NAME: ${SERVICE_NAME}
+      SERVICE_3071_NAME: ${SERVICE_NAME}
+      SERVICE_3071_CHECK_HTTP: /api/health/check
+      SERVICE_3071_CHECK_INTERVAL: 15s
+      SERVICE_3071_CHECK_TIMEOUT: 3s
+      PEPPOL_KEYSTORE: ${PEPPOL_develop_KEYSTORE}
+      PEPPOL_KEYSTORE_PASS: ${PEPPOL_develop_KEYSTOREPASS}
+    ports:
+     - '3076:3076'
+
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - '4369:4369'
+      - '5671:5671'
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      SERVICE_5672_NAME: 'rabbitmq'
+
+  redis:
+    image: opuscapita/redis:dev
+    ports:
+      - '6379:6379'
+    environment:
+      REDIS_AUTH: ${REDIS_AUTH}
+    depends_on:
+      - registrator
+
+  kong:
+    image: opuscapita/kong:dev
+    environment:
+      KONG_DATABASE: 'postgres'
+      KONG_PG_HOST: $KONG_PG_HOST
+      KONG_PG_PORT: $KONG_PG_PORT
+      APP_HOST: $HOST_IP
+      APP_HOST_PROTOCOL: $APP_HOST_PROTOCOL
+      APP_HOST_PORT: $APP_HOST_PORT
+      GATEWAY_SCHEME: $GATEWAY_SCHEME
+      GATEWAY_IP: $GATEWAY_IP
+      GATEWAY_PORT: $GATEWAY_PORT
+      GATEWAY_CALLBACK: $GATEWAY_CALLBACK
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_DB: $POSTGRES_DB
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      REDIS_HOST: $HOST_IP # TODO: remove after api-gw is using config
+      REDIS_PORT: 6379 # TODO: remove after api-gw is using config
+      REDIS_AUTH: $REDIS_AUTH # TODO: remove after api-gw is using config
+      SERVICE_8001_NAME: 'kong'
+      SERVICE_8080_NAME: 'kong-http'
+    ports:
+      - '8080:8080'
+      - '8443:8443'
+      - '8001:8001'
+      - '7946:7946'
+      - '7946:7946/udp'
+    depends_on:
+      - postgres
+      - mysql
+      - redis
+
+  api-registry:
+    image: opuscapita/api-registrator:dev
+    ports:
+      - 3004:3004
+    environment:
+      SERVICE_3002_CHECK_HTTP: /api/health/check
+      SERVICE_3002_CHECK_INTERVAL: 15s
+      SERVICE_3002_CHECK_TIMEOUT: 3s
+    depends_on:
+      - kong
+
+  postgres:
+    image: postgres:9.4
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: $POSTGRES_DB
+      POSTGRES_DB: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    depends_on:
+      - registrator
+
+  registrator:
+    image: gliderlabs/registrator
+    command: consul://consul:8500
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+    depends_on:
+      - consul
+    restart: on-failure
+
+  consul:
+    image: consul:latest
+    ports:
+      - '8400:8400'
+      - '8500:8500'
+      - '8600:53/udp'
+    labels:
+      SERVICE_IGNORE: 'true'
+    command: [agent, '-server', '-ui', '-bootstrap', '-client=0.0.0.0']

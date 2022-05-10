@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.opuscapita.sirius</groupId>
+  <artifactId>eespa-gateway</artifactId>
+  <name>eespa-opuscapita</name>
+  <version>0.0.1-SNAPSHOT</version>
+  <description>EESPA OpusCapita AS4 handler</description>
+  <inceptionYear>2022</inceptionYear>
+
+  <properties>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <java.version>1.8</java.version>
+
+    <spring-boot.version>2.6.7</spring-boot.version>
+  </properties>
+
+  <!-- Include here to not bloat the global scope -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.helger.peppol</groupId>
+        <artifactId>peppol-commons-parent-pom</artifactId>
+        <version>8.7.4</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.helger.phase4</groupId>
+        <artifactId>phase4-parent-pom</artifactId>
+        <version>1.3.7</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <scope>runtime</scope>
+      <optional>true</optional>
+    </dependency>
+
+    <dependency>
+      <groupId>com.helger.peppol</groupId>
+      <artifactId>peppol-smp-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger.phase4</groupId>
+      <artifactId>phase4-lib</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger.phase4</groupId>
+      <artifactId>phase4-profile-eespa</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger.phase4</groupId>
+      <artifactId>phase4-dynamic-discovery</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.sun.xml.bind</groupId>
+      <artifactId>jaxb-impl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>${spring-boot.version}</version>
+      </plugin>
+    </plugins>
+  </build>
+</project>
