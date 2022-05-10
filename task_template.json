@@ -16,14 +16,14 @@
     "host": ["consul:172.17.0.1"],
     "env": [
       "SERVICE_NAME=${serviceName}",
-      "SERVICE_3071_NAME=${serviceName}",
-      "SERVICE_3071_CHECK_HTTP=/api/health/check",
-      "SERVICE_3071_CHECK_INTERVAL=15s",
-      "SERVICE_3071_CHECK_TIMEOUT=3s",
-      "SERVICE_3074_NAME=${serviceName}-exporter",
-      "SERVICE_3074_CHECK_TCP=true",
-      "SERVICE_3074_CHECK_INTERVAL=15s",
-      "SERVICE_3074_CHECK_TIMEOUT=3s",
+      "SERVICE_3076_NAME=${serviceName}",
+      "SERVICE_3076_CHECK_HTTP=/api/health/check",
+      "SERVICE_3076_CHECK_INTERVAL=15s",
+      "SERVICE_3076_CHECK_TIMEOUT=3s",
+      "SERVICE_3077_NAME=${serviceName}-exporter",
+      "SERVICE_3077_CHECK_TCP=true",
+      "SERVICE_3077_CHECK_INTERVAL=15s",
+      "SERVICE_3077_CHECK_TIMEOUT=3s",
       "PEPPOL_KEYSTORE_PASS=${PEPPOL_:env_KEYSTOREPASS}"
     ],
     "oc-consul-injection": {

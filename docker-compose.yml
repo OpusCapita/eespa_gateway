@@ -14,17 +14,33 @@ services:
       SERVICE_NAME: 'eespa-gateway'
       SERVICE_TAGS: 'kong'
     environment:
-      PORT: 3071
+      PORT: 3076
       SERVICE_NAME: ${SERVICE_NAME}
-      SERVICE_3071_NAME: ${SERVICE_NAME}
-      SERVICE_3071_CHECK_HTTP: /api/health/check
-      SERVICE_3071_CHECK_INTERVAL: 15s
-      SERVICE_3071_CHECK_TIMEOUT: 3s
+      SERVICE_3076_NAME: ${SERVICE_NAME}
+      SERVICE_3076_CHECK_HTTP: /api/health/check
+      SERVICE_3076_CHECK_INTERVAL: 15s
+      SERVICE_3076_CHECK_TIMEOUT: 3s
+      OXALIS_DB_USER: ${PEPPOL_develop_DBUSER}
+      OXALIS_DB_PASS: ${PEPPOL_develop_DBPASS}
       PEPPOL_KEYSTORE: ${PEPPOL_develop_KEYSTORE}
       PEPPOL_KEYSTORE_PASS: ${PEPPOL_develop_KEYSTOREPASS}
     ports:
      - '3076:3076'
 
+  mysql:
+    image: "mysql:5.7"
+    command: ['--character-set-server=utf8', '--collation-server=utf8_general_ci']
+    ports:
+      - "3306:3306"
+    labels:
+      SERVICE_3306_NAME: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: test
+      MYSQL_USER: ${PEPPOL_develop_DBUSER}
+      MYSQL_PASSWORD: ${PEPPOL_develop_DBPASS}
+      MYSQL_DATABASE: 'peppol-monitor'
+    depends_on:
+      - registrator
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -73,6 +89,8 @@ services:
       - '7946:7946'
       - '7946:7946/udp'
     depends_on:
+      - postgres
+      - mysql
       - redis
 
   api-registry:
