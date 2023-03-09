@@ -20,6 +20,15 @@ jobs:
       - run:
           name: "building and testing locally"
           command: "node ../buildprocess/bp_localbuild.js opuscapita/$CIRCLE_PROJECT_REPONAME"
+      - run:
+          name: "Collect docker output logs"
+          command: "docker-compose logs main > docker_main.log; tar cvf errlogs.tar docker_main.log; gzip -S .gz errlogs.tar"
+          when: "on_fail"
+      - store_artifacts:
+          name: Store artifact - errlogs.tar.gz
+          path: errlogs.tar.gz
+          destination: errlogs.tar.gz
+          when: "on_fail"
       - store_test_results:
           path: "junit"
       - run:
